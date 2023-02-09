@@ -92,7 +92,7 @@ exports.logout = (req, res) => {
 }
 
 exports.checkSession = (req, res, next) => {
-  const { cookies, data }  = req.body
+  const {cookies} = req.body
   console.log(cookies)
   if (cookies == undefined) {
     return res.status(403).json({
