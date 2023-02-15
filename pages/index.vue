@@ -9,11 +9,34 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Form from '../components/Form.vue'
 import LoginTitle from '../components/LoginTitle.vue';
 
 export default {
     name: "IndexPage",
+    async created() {
+      let getCookie = document.cookie
+      let cookie = getCookie.split("Session=")
+      await axios.post('http://localhost:5000/api/v1/get-status', {
+        cookies: cookie[1]
+      }).catch((err) => {
+        console.log(err)
+      }).then((res) => {
+        if (res === undefined) {
+          document.cookie = "Session" + '="";expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+          alert("Session is Expired")
+        } else {
+          if (res.status === 200) {
+            window.location.href = '/download'
+          }
+        }
+        
+        
+      })
+      
+      
+    },
 }
 </script>
 
