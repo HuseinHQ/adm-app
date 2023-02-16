@@ -16,13 +16,17 @@
             <InputComponent type="date" title="Program End"  />
         </div>
         <div class="fifth-row-left">
-            <div class="check-box">
-                <CheckBoxComponent type="checkbox" title="White List Participant" name="parent-checkbox" value="White-list" id="parent-option" v-on:onclick="activateOptions()"/>
-                <div class="check-box-child" >
-                    <CheckBoxComponent type="radio" title="Upload White List" name="child-checkbox1" value="upload-White-list" id="child-option-1" />
-                    <CheckBoxComponent type="radio" title="WhiteList from Existing Database" name="child-checkbox2" value="White-list-from-databse" id="child-option-2"/>
-                </div>
+          <div class="check-box">
+            <input type="checkbox" name="parent-checkbox" value="White-list" id="parent-option" @click="activateOptions">
+            <label for="parent-checkbox">White List</label><br>
+            <div class="check-box-child" >
+                <input type="radio" name="child-checkbox" value="upload-White-list" id="child-option-1" disabled>
+            <label for="parent-checkbox">Upload White List</label><br>
+                
+                <input type="radio" name="child-checkbox" value="White-list-from-databse" id="child-option-2" disabled="false">
+            <label for="parent-checkbox">WhiteList from Existing Database</label><br>
             </div>
+          </div>
         </div>
     </div>
         
