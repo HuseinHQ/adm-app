@@ -13,5 +13,6 @@ router.post('/get-status', authController.checkSession, authController.getStatus
 router.post('/getdataadn', authController.checkSession, adnController.getdata)
 router.post('/get-user', authController.checkSession, userManagementController.getall)
 router.post('/getdatauser', authController.checkSession, userManagementController.getdatauser)
+router.post('/deleteuser', authController.checkSession, userManagementController.deleteuser)
 
 module.exports = router

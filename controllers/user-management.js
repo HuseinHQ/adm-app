@@ -63,3 +63,18 @@ exports.getdatauser = (req, res) => {
 exports.edituser = (req, res) => {
     const {username, password, confirmPassword, status, regional} = req.body
 }
+
+exports.deleteuser = (req, res) => {
+    const { id } = req.body
+    db.query('DELETE FROM users WHERE id = ?', [id], (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          errorMessage: error
+        })
+      }
+  
+      return res.status(200).json({
+        message: "Success Delete User"
+      })
+    })
+}
