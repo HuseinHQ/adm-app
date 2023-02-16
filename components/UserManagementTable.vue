@@ -29,13 +29,17 @@
 
 <script>
 import axios from 'axios';
+import console from 'console';
+import { jsontoexcel } from "vue-table-to-excel";
+
 export default {
   name: 'UserManagementTable',
   data(){
     return{
       countdata: 1,
       datalenght: 0,
-      items: []
+      items: [],
+      heads: ['No', "User Name", "Regional", "Status Admin"]
     }
   },
   async created () {
@@ -52,6 +56,17 @@ export default {
         this.datalenght = res.data.data.length * 100
         this.items = res.data.data
       }
+    })
+  }, 
+  methods: {
+    download(){
+      jsontoexcel.getXlsx(this.items, this.heads, 'data.xlsx');
+    }
+  },
+  mounted(){
+    const thisInstance = this
+    this.$root.$on('incrementCountEvent', function(){
+      thisInstance.download()
     })
   }
 }
