@@ -51,14 +51,12 @@ exports.login = (req, res) => {
         errorMessage: error
       })
     }
-    
 
     if (result[0] === undefined) {
       return res.status(500).json({
         Message: "user or password is empty"
       })
     }
-
 
     // Compare password with bcrypto
     const checkPassword = await bcrypt.compare(password, result[0].password)
@@ -116,9 +114,9 @@ exports.checkSession = (req, res, next) => {
 exports.getStatus = (req, res) => {
   db.query('SELECT status FROM users WHERE id = ? ', [res.locals.id], (error, result) => {
     if (error) {
-        return res.status(500).json({
-          errorMessage: error
-        })
+      return res.status(500).json({
+        errorMessage: error
+      })
     }
 
     let status = result[0].status
@@ -127,3 +125,4 @@ exports.getStatus = (req, res) => {
     })
   })
 }
+

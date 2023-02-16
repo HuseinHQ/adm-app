@@ -11,6 +11,7 @@ router.get('/logout', authController.checkSession, authController.logout)
 router.post('/get-status', authController.checkSession, authController.getStatus)
 
 router.post('/getdataadn', authController.checkSession, adnController.getdata)
-router.get('/get-user', authController.checkSession, userManagementController.getall)
+router.post('/get-user', authController.checkSession, userManagementController.getall)
+router.post('/getdatauser', authController.checkSession, userManagementController.getdatauser)
 
 module.exports = router
