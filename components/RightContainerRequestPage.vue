@@ -19,7 +19,7 @@
             </div>            
         </div>
             <div class="mt-10 grid justify-items-end pr-20">
-                <button class=" bg-blue-500 w-140 h-15 rounded-md text-base p-2 text-white px-7">Submit</button>
+                <button class=" bg-blue-500 w-140 h-15 rounded-md text-base p-2 text-white px-9">Submit</button>
             </div>
     </div>
 
