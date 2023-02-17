@@ -48,7 +48,7 @@
       text-align: start;
     }
     .input-field {
-      width: 90%;
+      width: 97%;
       height: 40px;
       border: 1px solid #7C7D80;
       
