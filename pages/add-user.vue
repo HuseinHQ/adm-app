@@ -1,7 +1,8 @@
 <template>
     <div>
         <Navbar />
-        <div class="form-add">
+        <div class="add-user-container">
+          <div class="form-add">
             <p class="title-form">Add New User</p>
             <form action="" class="flex flex-row flex-auto">
                 <div class="w-1/2">
@@ -39,7 +40,9 @@
                 </div>
                 
             </form>
+        </div>  
         </div>
+        
     </div>
     
 </template>
@@ -101,6 +104,14 @@
 </script>
 
 <style>
+
+    .add-user-container{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    }
+
     .button-input{
         margin-top: 35px;
         display: flex;
@@ -222,11 +233,7 @@
         background-image: none;
     }
     .form-add {
-        position: absolute;
-        width: 60%;
-        height: 60%;
-        left: 20%;
-        top: 25%;
+        width:1000px;
 
         padding: 48px;
         background: #FFFFFF;
