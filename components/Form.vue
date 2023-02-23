@@ -29,23 +29,25 @@ export default {
   },
   methods: {
     async submitLogin() {
+      window.alert("tes1")
       const response = await axios.post("http://localhost:5000/api/v1/login", {
         username: this.username,
         password: this.password
       }).catch((err) => {
-        console.log(err)
+        window.alert(err)
       }).then((res) => {
         if (res === undefined) {
-          alert("Incorrect Username or Password!!")
+          window.alert("Incorrect Username or Password!!")
         } else{
           if (res.status == 202) {
             const expire = Math.floor(Date.now() / 1000) + (60 * 60)
             console.log("Post successfully created!") 
             document.cookie = "Session="+res.data.token+";"+expire+";path=/"
             window.location.href = '/download';
-          }
+          } 
         }
       })
+      window.alert('tes')
     },
   }
 }

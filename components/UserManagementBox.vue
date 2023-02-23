@@ -28,10 +28,6 @@ export default {
       addUser() {
         window.location.href = '/add-user'
       },
-      download() {
-        window.alert('tes')
-        this.$root.$emit('incrementCountEvent')
-      }
     }
 }
 </script>

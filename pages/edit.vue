@@ -27,10 +27,10 @@
                 
                 <div class="w-1/2">
                     <label for="password" class="label-password">Password</label>
-                    <input class="input-add" type="password" required name="password" id="password" placeholder="e.g ineedadn123">
+                    <input class="input-add" type="password" name="password" id="password" placeholder="e.g ineedadn123">
 
                     <label for="confirm" class="label-confirm">Confirm Password</label>
-                    <input class="input-add" type="password" required name="confirm" id="confirm" placeholder="e.g ineedadn123">
+                    <input class="input-add" type="password" name="confirm" id="confirm" placeholder="e.g ineedadn123">
 
                     <div class="mt-9 flex flex-wrap gap-5 justify-center ">
                         <button class="cancel button-add" type="button" @click="cancel">Cancel</button>
@@ -93,8 +93,30 @@
         cancel() {
             window.location.href = '/user-management';
         },
-        submitdata() {
-            
+        async submitdata() {
+            let getCookie = document.cookie
+            let cookie = getCookie.split("Session=")
+            let ulrParams = new URLSearchParams(window.location.search)
+            await axios.post('http://localhost:5000/api/v1/edituser', {
+                "username" : this.username,
+                "password" : this.password,
+                "confirmPassword" : this.passwordConfirm,
+                "region" : this.regional,
+                "status" : this.status,
+                "cookies": cookie[1],
+                "id" : ulrParams.get('id'),
+            }).catch((err) => {
+                console.log(err)
+            }).then((res) => {
+                if (res === undefined) {
+                    alert("Empty data!")
+                } else{
+                    if (res.status === 200) {
+                        window.alert(res.data.message)
+                        window.location.href = '/user-management';
+                    }
+                }
+            })
         }
     },
     components: { Navbar}
