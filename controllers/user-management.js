@@ -21,7 +21,8 @@ exports.getall = (req, res) => {
                 }
 
                 return res.status(200).json({
-                    data: result
+                    data: result,
+                    statusadmin: status
                 })
             })
         } else if (status == 'Regional'){
@@ -61,7 +62,25 @@ exports.getdatauser = (req, res) => {
 }
 
 exports.edituser = (req, res) => {
-    const {username, password, confirmPassword, status, regional} = req.body
+    const {username, password, confirmPassword, status, region, id} = req.body
+    if (password == undefined && confirmPassword == undefined || password == '' && confirmPassword == '' ) {
+      db.query('UPDATE users SET ? WHERE id = ?', [{username: username, status: status,regional:region}, id], (error, result) => {
+        if (error) {
+          return res.status(500).json({
+            errorMessage: error
+          })
+        }
+        console.log("Update Data",result[0])
+    
+        return res.status(200).json({
+          message: 'Succes Update Data'
+        })
+      })
+    } else {
+      return res.status(200).json({
+        message: 'Failed Update Data'
+      })
+    }
 }
 
 exports.deleteuser = (req, res) => {
