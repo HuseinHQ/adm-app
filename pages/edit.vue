@@ -1,47 +1,8 @@
 <template>
     <div>
         <Navbar />
-        <!-- <div class="form-add">
-            <p class="title-form">Edit User</p>
-            <form action="" class="flex flex-row flex-auto">
-                <div class="w-1/2">
-                    <label for="username" class="label-username">Username</label>
-                    <input class="input-add"  type="text" required name="username" id="username" placeholder="e.g john.com" v-model="username" value="{username}">
-                    
-                    <label for="regional" class="label-regional">Regional</label>
-                    <input class="input-add"  type="text" required name="regional" id="regional" placeholder="Input Regional" v-model="regional" value="{regional}">
-
-                    <label for="status" class="label-status">Status Admin</label>
-                    <div class="selectdiv">
-                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="img-select" alt="" srcset="">
-                        <select class="input-add"  name="status" required autocomplete="off" id="status" placeholder="Select Admin Status">
-                            <option value="" selected hidden disabled class="unselect">Select Admin Status</option>
-                            <option value="Web" :selected="status === 'Web' ? true : false ">Admin Web</option>
-                            <option value="Regional" :selected="status === 'Regional' ? true : false ">Admin Regional</option>
-                            <option value="User" :selected="status === 'User' ? true : false ">Admin User</option>
-                        </select>
-                    </div>
-                    
-                    
-                </div>
-                
-                <div class="w-1/2">
-                    <label for="password" class="label-password">Password</label>
-                    <input class="input-add" type="password" name="password" id="password" placeholder="e.g ineedadn123">
-
-                    <label for="confirm" class="label-confirm">Confirm Password</label>
-                    <input class="input-add" type="password" name="confirm" id="confirm" placeholder="e.g ineedadn123">
-
-                    <div class="mt-9 flex flex-wrap gap-5 justify-center ">
-                        <button class="cancel button-add" type="button" @click="cancel">Cancel</button>
-                        <button type="submit" class="save button-add" @click="submitdata">Save</button>
-                    </div>
-                </div>
-                
-            </form>
-        </div> -->
         <div class="add-user-container flex justify-center align-middle">
-            <div class="form-add w-1/2 mt-10 bg-white mx-auto rounded-md shadow-md">
+            <div class="w-1/2 mt-10 bg-white mx-auto rounded-md shadow-md">
               <p class="title-form text-xl font-bold pt-6 pb-2 mx-7">Edit User</p>
               <form action="" class="flex flex-row flex-auto ml-6 mr-6 pb-6">
                   <div class="w-1/2 ">
@@ -98,7 +59,7 @@
 
 
   export default {
-    name: "AddUser",
+    name: "EditUser",
     data() {
       return {
         username: '',

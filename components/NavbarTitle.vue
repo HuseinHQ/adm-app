@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container ml-6">
     <h1 class="title">ADN DOWNLOAD MANAGER</h1>
     <div class="log-container">
       <h2>Logged in as,</h2>
