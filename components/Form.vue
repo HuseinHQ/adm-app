@@ -11,7 +11,7 @@
     </div>
     
     <div class="flex ">
-      <button type="submit" class="bg-gradient-to-r from-slate-800 to-slate-600 mx-auto px-10 py-3 rounded-full w-full text-white font-bold shadow-md mt-3 mb-4 hover:from-slate-700 hover:to-slate-500 duration-300 transition ease-in-out" @click="submitLogin">Sign In</button>
+      <button type="button" class="bg-gradient-to-r from-slate-800 to-slate-600 mx-auto px-10 py-3 rounded-full w-full text-white font-bold shadow-md mt-3 mb-4 hover:from-slate-700 hover:to-slate-500 duration-300 transition ease-in-out" @click="submitLogin">Sign In</button>
     </div>
   </form>
 </template>
@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     async submitLogin() {
-      window.alert("tes1")
       const response = await axios.post("http://localhost:5000/api/v1/login", {
         username: this.username,
         password: this.password
@@ -47,7 +46,6 @@ export default {
           } 
         }
       })
-      window.alert('tes')
     },
   }
 }

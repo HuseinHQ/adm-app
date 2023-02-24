@@ -34,7 +34,7 @@
 
                     <div class="mt-9 flex flex-wrap gap-5 justify-center ">
                         <button class="cancel button-add" type="button" @click="cancel">Cancel</button>
-                        <button type="submit" class="save button-add" @submit="submitdata">Save</button>
+                        <button type="submit" class="save button-add" @click="submitdata">Save</button>
                     </div>
                 </div>
                 
