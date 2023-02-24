@@ -14,5 +14,7 @@ router.post('/getdataadn', authController.checkSession, adnController.getdata)
 router.post('/get-user', authController.checkSession, userManagementController.getall)
 router.post('/getdatauser', authController.checkSession, userManagementController.getdatauser)
 router.post('/deleteuser', authController.checkSession, userManagementController.deleteuser)
+router.post('/edituser', authController.checkSession, userManagementController.edituser)
+
 
 module.exports = router

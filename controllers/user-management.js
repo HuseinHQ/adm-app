@@ -64,7 +64,7 @@ exports.getdatauser = (req, res) => {
 exports.edituser = (req, res) => {
     const {username, password, confirmPassword, status, region, id} = req.body
     if (password == undefined && confirmPassword == undefined || password == '' && confirmPassword == '' ) {
-      db.query('UPDATE users SET ? WHERE id = ?', [{username: username, status: status,regional:region}, id], (error, result) => {
+      db.query('UPDATE users SET ? WHERE id = ?', [{user_domain: username, status: status,regional:region}, id], (error, result) => {
         if (error) {
           return res.status(500).json({
             errorMessage: error
