@@ -10,7 +10,11 @@ router.post('/register', authController.register)
 router.get('/logout', authController.checkSession, authController.logout)
 router.post('/get-status', authController.checkSession, authController.getStatus)
 
+// ADN
 router.post('/getdataadn', authController.checkSession, adnController.getdata)
+router.post('/getkeyword', adnController.getkeyword)
+
+// User Management
 router.post('/get-user', authController.checkSession, userManagementController.getall)
 router.post('/getdatauser', authController.checkSession, userManagementController.getdatauser)
 router.post('/deleteuser', authController.checkSession, userManagementController.deleteuser)
