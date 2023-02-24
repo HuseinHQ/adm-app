@@ -14,8 +14,8 @@
           <!-- Select ADN -->
           <div class="pr-3">
             <label for="select" class="block mb-2 text-md font-medium text-slate-500">Select ADN</label>
-            <select id="select" v-model="selected" @change="cekAdn" class="border border-slate-500 text-slate-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
-              <option disabled selected>Select ADN</option>
+            <select id="select" v-model="selectedData" @change="cekAdn" autocomplete="off" class="border border-slate-500  text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
+              <option disabled value="" class="disabled:text-slate-300" >Select ADN</option>
               <option value="utama" >Utama</option>
             </select>
           </div>
@@ -23,8 +23,8 @@
           <!-- Select Keyword -->
           <div class="pr-3">
             <label for="select" class="block mb-2 text-md font-medium text-slate-500">Select Keyword</label>
-            <select id="select" v-model="keyword" class="border border-slate-500 text-slate-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
-              <option disabled selected>Select Keyword</option>
+            <select id="select" v-model="keyword" class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
+              <option disabled selected value="">Select Keyword</option>
               <option v-for="keywordData in itemsKeyword" v-bind:value="keywordData.keyword">{{keywordData.keyword}}</option>
             </select>
           </div>
@@ -54,10 +54,10 @@
 
         <!-- Search And Download Button-->
         <div class="pt-5 mx-6 mb-5 flex gap-3">
-          <button class="bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-md">Download</button>
+          <button class="bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-md" v-on:click.prevent="downloadTable">Download</button>
           <!-- Search -->
           <div class="focus-within:text-gray-400 border border-slate-300 rounded-md ml-auto">
-            <input class="py-2 px-3 text-sm text-white rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" >
+            <input class="py-2 px-3 text-sm text-black rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" >
           </div>
         </div>
 
@@ -73,9 +73,13 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">Waktu</th>
               </tr>
             </thead>
-            <tbody v-for="item in filteredItems" class="bg-white divide-y divide-gray-200">
-              <tr>
-                <td class="px-6 py-3 whitespace-nowrap">{{ item.no }}</td>
+            
+            <tbody  class="bg-white divide-y divide-gray-200">
+              <tr v-if="filteredItems.length == 0">
+                <td class="px-6 py-3 whitespace-nowrap text-center" colspan="5"  >Data Not Found</td>
+              </tr>
+              <tr v-for="(item, index) in filteredItems">
+                <td class="px-6 py-3 whitespace-nowrap">{{ index + 1}}</td>
                 <td class="px-6 py-3 whitespace-nowrap">{{ item.msisdn }}</td>
                 <td class="px-6 py-3 whitespace-nowrap">{{ item.sms }}</td>
                 <td class="px-6 py-3 whitespace-nowrap">{{ item.tanggal }}</td>
@@ -121,6 +125,8 @@
 <script>
   import Navbar from '~/components/Navbar.vue';
   import axios from 'axios';
+  import {json2excel, excel2json} from 'js2excel';
+  
 
   export default {
     name: "DownloadPage",
@@ -129,7 +135,7 @@
         startDate: '',
         endDate: '',
         keyword: '',
-        selected: '',
+        selectedData: '',
         searchKey: '',
         itemsKeyword: [],
         items: [],
@@ -141,10 +147,8 @@
     },
     methods: {
       async generateTable(){
-        window.alert(this.keyword)
         let getCookie = document.cookie
         let cookie = getCookie.split("Session=")
-        let startDate = new Date(this.startDate);
 
         const response = await axios.post('http://localhost:5000/api/v1/getdataadn', {
           cookies: cookie[1],
@@ -157,13 +161,11 @@
           if (res === undefined) {
             alert("Data Not Found")
           } else {
-            console.log(res.data.data)
             this.items = res.data.data
           }
         })
       },
       async cekAdn(){
-        window.alert(this.selected)
         let getCookie = document.cookie
         let cookie = getCookie.split("Session=")
         const response = await axios.post('http://localhost:5000/api/v1/getkeyword', {
@@ -174,13 +176,18 @@
           if (res === undefined) {
             alert("Data Not Found")
           } else {
-            console.log(res.data.data)
             this.itemsKeyword = res.data.data
           }
         })
       },
-      searchTable(){
-      },
+      downloadTable(){
+        let data = this.filteredItems
+        let name = 'Data_ADN_Export'
+        json2excel({
+          data,
+          name: name,
+        })
+      }
     },
     computed: {
       filteredItems () {
