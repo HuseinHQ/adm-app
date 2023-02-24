@@ -1,21 +1,200 @@
 <template>
   <div>
+    <!-- Navbar -->
     <Navbar />
-    <GeneratorBox />
-    <AdnBox />
+
+    <!-- Generator Box -->
+    <div class="container">
+      <div class="bg-white max-w-[65rem] m-6 pb-6 rounded-md shadow-md">
+        <!-- Title -->
+        <h2 class="text-xl font-bold pt-4 pl-6">Generate Table</h2>
+        <hr class="ml-6 mr-8 my-2">
+        <form class="flex  items-end ml-6">
+
+          <!-- Select ADN -->
+          <div class="pr-3">
+            <label for="select" class="block mb-2 text-md font-medium text-slate-500">Select ADN</label>
+            <select id="select" v-model="selected" @change="cekAdn" class="border border-slate-500 text-slate-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
+              <option disabled selected>Select ADN</option>
+              <option value="utama" >Utama</option>
+            </select>
+          </div>
+      
+          <!-- Select Keyword -->
+          <div class="pr-3">
+            <label for="select" class="block mb-2 text-md font-medium text-slate-500">Select Keyword</label>
+            <select id="select" v-model="keyword" class="border border-slate-500 text-slate-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
+              <option disabled selected>Select Keyword</option>
+              <option v-for="keywordData in itemsKeyword" v-bind:value="keywordData.keyword">{{keywordData.keyword}}</option>
+            </select>
+          </div>
+      
+          <!-- Select Start Date -->
+          <div class="pr-3">
+            <label for="date" class="block mb-2 text-md font-medium text-slate-500">Start Date</label>
+            <input id="date" v-model="startDate" type="date" class="border border-slate-500 text-slate-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[8px]" />
+          </div>
+      
+          <!-- Select End Date -->
+          <div class="pr-3">
+            <label for="date" class="block mb-2 text-md font-medium text-slate-500">End Date</label>
+            <input id="date" v-model="endDate" type="date" class="border border-slate-500 text-slate-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[8px]" />
+          </div>
+      
+          <!-- Button Submit -->
+          <button class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-9 rounded-md h-10" v-on:click.prevent="generateTable">Generate</button>
+          
+        </form>
+      </div>
+    </div>
+
+    <!-- Adn BOX -->
+    <div class="container mb-6" v-if="items.length != 0">
+      <div class="max-w-[92rem] bg-white mx-auto rounded-md shadow-md">
+
+        <!-- Search And Download Button-->
+        <div class="pt-5 mx-6 mb-5 flex gap-3">
+          <button class="bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-md">Download</button>
+          <!-- Search -->
+          <div class="focus-within:text-gray-400 border border-slate-300 rounded-md ml-auto">
+            <input class="py-2 px-3 text-sm text-white rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" >
+          </div>
+        </div>
+
+        <!-- ADN TABLE -->
+        <div class="mx-6 rounded-md overflow-hidden">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">No</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">MSISDN</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">SMS</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">Tanggal</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">Waktu</th>
+              </tr>
+            </thead>
+            <tbody v-for="item in filteredItems" class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-3 whitespace-nowrap">{{ item.no }}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{ item.msisdn }}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{ item.sms }}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{ item.tanggal }}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{ item.waktu }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center mt-8 pb-6 ml-6 ">
+          <h3 class="px-3 font-semibold text-sm inline">View loads per page</h3>
+          <select class="inline-block border border-slate-400 rounded-md mx-3 p-1">
+            <option>5</option>
+            <option>10</option>
+            <option>15</option>
+            <option>20</option>
+          </select>
+          <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <span class="sr-only">Previous</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <img class="w-4 rotate-180" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+            </a>
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">1</a>
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">2</a>
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">3</a>
+            <span class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium">...</span>
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">8</a>
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">9</a>
+            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50">
+              <span class="sr-only">Next</span>
+              <!-- Heroicon name: solid/chevron-right -->
+              <img class="w-4" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Navbar from '~/components/Navbar.vue';
-  import GeneratorBox from '~/components/GeneratorBox.vue';
-  import AdnBox from '~/components/AdnBox.vue';
+  import axios from 'axios';
 
   export default {
     name: "DownloadPage",
-    created() {
-        //alert("Welcome")
+    data(){
+      return{
+        startDate: '',
+        endDate: '',
+        keyword: '',
+        selected: '',
+        searchKey: '',
+        itemsKeyword: [],
+        items: [],
+        itemsTempory: []
+      }
     },
-    components: { Navbar, GeneratorBox, AdnBox }
+    async created() {
+      
+    },
+    methods: {
+      async generateTable(){
+        window.alert(this.keyword)
+        let getCookie = document.cookie
+        let cookie = getCookie.split("Session=")
+        let startDate = new Date(this.startDate);
+
+        const response = await axios.post('http://localhost:5000/api/v1/getdataadn', {
+          cookies: cookie[1],
+          keyword: this.keyword,
+          start_date: this.startDate,
+          end_date: this.endDate
+        }).catch((err) => {
+          console.log(err)
+        }).then((res) => {
+          if (res === undefined) {
+            alert("Data Not Found")
+          } else {
+            console.log(res.data.data)
+            this.items = res.data.data
+          }
+        })
+      },
+      async cekAdn(){
+        window.alert(this.selected)
+        let getCookie = document.cookie
+        let cookie = getCookie.split("Session=")
+        const response = await axios.post('http://localhost:5000/api/v1/getkeyword', {
+          cookies: cookie[1],
+        }).catch((err) => {
+          console.log(err)
+        }).then((res) => {
+          if (res === undefined) {
+            alert("Data Not Found")
+          } else {
+            console.log(res.data.data)
+            this.itemsKeyword = res.data.data
+          }
+        })
+      },
+      searchTable(){
+      },
+    },
+    computed: {
+      filteredItems () {
+        return this.items.filter(item => {
+          if ( item.sms.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1) {
+            return item.sms.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1
+          } else {
+            return item.msisdn.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1
+          }
+          
+        })
+        
+      }
+    },
+    components: { Navbar}
 } 
 </script>
