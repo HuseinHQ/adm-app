@@ -57,7 +57,7 @@
           <button class="bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-md" v-on:click.prevent="downloadTable">Download</button>
           <!-- Search -->
           <div class="focus-within:text-gray-400 border border-slate-300 rounded-md ml-auto">
-            <input class="py-2 px-3 text-sm text-black rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" >
+            <input class="py-2 px-3 text-sm text-black rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" v-on:input="search" >
           </div>
         </div>
 
@@ -87,30 +87,32 @@
               </tr>
             </tbody>
           </table>
+          
         </div>
 
         <!-- Pagination -->
         <div class="flex items-center mt-8 pb-6 ml-6 ">
           <h3 class="px-3 font-semibold text-sm inline">View loads per page</h3>
-          <select class="inline-block border border-slate-400 rounded-md mx-3 p-1">
-            <option>5</option>
-            <option>10</option>
-            <option>15</option>
+          <select v-model="perPages" class="inline-block border border-slate-400 rounded-md mx-3 p-1">
+            <option selected value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
             <option>20</option>
           </select>
           <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page != 1" @click="page--"  >
               <span class="sr-only">Previous</span>
               <!-- Heroicon name: solid/chevron-left -->
               <img class="w-4 rotate-180" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
             </a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">1</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">2</a>
+
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page+5)">{{pageData}}</a>
+            <!-- <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">2</a>
             <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">3</a>
             <span class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium">...</span>
             <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">8</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">9</a>
-            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">9</a> -->
+            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length" @click="page++"  >
               <span class="sr-only">Next</span>
               <!-- Heroicon name: solid/chevron-right -->
               <img class="w-4" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
@@ -139,7 +141,10 @@
         searchKey: '',
         itemsKeyword: [],
         items: [],
-        itemsTempory: []
+        itemsTempory: [],
+        pages: [],
+        page: 1,
+        perPages: 6,
       }
     },
     async created() {
@@ -187,18 +192,40 @@
           data,
           name: name,
         })
+      },
+      search(){
+        console.log(this.page, this.pages.length, this.perPages)
+      },
+      setPages(){
+        let numberOfPages = Math.ceil(this.items.length / this.perPages)
+        for (let index = 1; index <= numberOfPages; index++) {
+          this.pages.push(index)
+        }
+      },
+      paginate(posts) {
+        this.pages = []
+        console.log('Active')
+        let page = this.page;
+        let perPage = parseInt(this.perPages);
+        let from = (page * perPage) - perPage;
+        let to = (page * perPage);
+        return posts.slice(form, to)
+      }
+    },
+    filters: {
+      trimWords(value){
+        return value.split(" ").splice(0,20).join(" ") + '...';
       }
     },
     computed: {
       filteredItems () {
-        return this.items.filter(item => {
+        return this.paginate(this.items.filter(item => {
           if ( item.sms.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1) {
             return item.sms.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1
           } else {
             return item.msisdn.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1
           }
-          
-        })
+        }))
         
       }
     },
