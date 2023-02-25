@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[10%]">
+  <div class="mt-[8%]">
     <div id="app" class="h-full flex-col flex justify-center align-middle">
       <LoginTitle />
       <Form />

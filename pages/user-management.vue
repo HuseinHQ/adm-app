@@ -1,8 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <div class="container my-6">
-      <div class="max-w-[93rem] bg-white mx-auto rounded-md shadow-md">
+    <div class="max-w-[100%] m-6">
+      <div class="bg-white mx-auto rounded-md shadow-md">
         <h2 class="text-xl font-bold pt-6 pb-2 mx-7">User Management</h2>
         <hr class="mx-6 my-2">
         <!-- Button Download and Search -->
@@ -47,28 +47,41 @@
         <!-- Pagination -->
         <div class="flex items-center mt-8 pb-6 ml-6 ">
           <h3 class="px-3 font-semibold text-sm inline">View loads per page</h3>
-          <select class="inline-block border border-slate-400 rounded-md mx-3 p-1">
-            <option>5</option>
-            <option>10</option>
-            <option>15</option>
-            <option>20</option>
+          <select v-model="perPages" class="inline-block border border-slate-400 rounded-md mx-3 p-1">
+            <option selected value="1">1</option>
+            <option >2</option>
+            <option >4</option>
+            <option v-if="perPages == items.length">{{items.length}}</option>
+            <option v-else>all</option>
           </select>
           <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a class="relative pr-1 inline-flex items-center rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page >= 4" @click="page = pagesFirst"  >
               <span class="sr-only">Previous</span>
               <!-- Heroicon name: solid/chevron-left -->
-              <img class="w-4 rotate-180" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+              <img class="w-5 rotate-180" src="https://cdn-icons-png.flaticon.com/512/2722/2722998.png "/>
             </a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">1</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">2</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">3</a>
-            <span class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium">...</span>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">8</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">9</a>
-            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a class="relative inline-flex items-center py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page != 1" @click="page--"  >
+              <span class="sr-only">Previous</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <img class="w-3 rotate-180" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+            </a>
+
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium  hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-2, page-1)"  v-if="page != 1 && page == 2">{{pageData}}</a>
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium  hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-3, page-1)"  v-if="page != 2">{{pageData}}</a>
+
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium underline hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page)" v-if="page == pageData">{{pageData}}</a>
+
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page, page+2)" v-if="page != pageData">{{pageData}}</a>
+            
+            <a class="relative inline-flex items-center  py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length" @click="page++"  >
               <span class="sr-only">Next</span>
               <!-- Heroicon name: solid/chevron-right -->
-              <img class="w-4" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+              <img class="w-3" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+            </a>
+            <a class="relative inline-flex items-center pl-1 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length && page < pages.length - 2" @click="page = pages.length"  >
+              <span class="sr-only">Previous</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <img class="w-5" src="https://cdn-icons-png.flaticon.com/512/2722/2722998.png "/>
             </a>
           </nav>
         </div>
@@ -89,6 +102,10 @@
           items: [],
           statusweb: '',
           searchKey: '',
+          pagesFirst: 0,
+          pages: [],
+          page: 1,
+          perPages: 4,
         }
       },
       async created() {
@@ -120,18 +137,40 @@
             data,
             name: name,
           })
+        },
+        setPages(posts){
+          if (this.perPages == 'all') {
+            this.perPages = posts.length
+          }
+          let numberOfPages = Math.ceil(posts.length / this.perPages)
+          for (let index = 1; index <= numberOfPages; index++) {
+            console.log(index)
+            if (index == 1) {
+              this.pagesFirst = index
+            }
+            this.pages.push(index)
+          }
+        },
+        paginate(posts) {
+          this.pages = []
+          this.setPages(posts)
+          let page = this.page;
+          let perPage = parseInt(this.perPages);
+          let from = (page * perPage) - perPage;
+          let to = (page * perPage);
+          return posts.slice(from, to)
         }
       },
       computed: {
         filteredItems () {
-          return this.items.filter(item => {
+          return this.paginate(this.items.filter(item => {
             if ( item.user_domain.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1) {
               return item.user_domain.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1
             } else {
               return item.regional.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1
             }
             
-          })
+          }))
           
         }
       },

@@ -14,9 +14,10 @@
           <!-- Select ADN -->
           <div class="pr-3">
             <label for="select" class="block mb-2 text-md font-medium text-slate-500">Select ADN</label>
-            <select id="select" v-model="selectedData" @change="cekAdn" autocomplete="off" class="border border-slate-500  text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
+            <select id="select" required v-model="selectedData" @change="cekAdn" autocomplete="off" class="border border-slate-500  text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[200px] px-4 py-[10px]">
               <option disabled value="" class="disabled:text-slate-300" >Select ADN</option>
-              <option value="utama" >Utama</option>
+              <option value="3934">3934</option>
+              <option value="2367">2367</option>
             </select>
           </div>
       
@@ -42,22 +43,22 @@
           </div>
       
           <!-- Button Submit -->
-          <button class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-9 rounded-md h-10" v-on:click.prevent="generateTable">Generate</button>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-9 rounded-md h-10" v-on:click.prevent="generateTable">Generate</button>
           
         </form>
       </div>
     </div>
 
     <!-- Adn BOX -->
-    <div class="container mb-6" v-if="items.length != 0">
-      <div class="max-w-[92rem] bg-white mx-auto rounded-md shadow-md">
+    <div class="max-w-[100%] m-6" v-if="items.length != 0">
+      <div class=" bg-white mx-auto rounded-md shadow-md">
 
         <!-- Search And Download Button-->
         <div class="pt-5 mx-6 mb-5 flex gap-3">
           <button class="bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-md" v-on:click.prevent="downloadTable">Download</button>
           <!-- Search -->
           <div class="focus-within:text-gray-400 border border-slate-300 rounded-md ml-auto">
-            <input class="py-2 px-3 text-sm text-black rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" v-on:input="search" >
+            <input class="py-2 px-3 text-sm text-black rounded-md placeholder:font-semibold focus:outline-none focus:bg-white focus:text-gray-900" type="search" name="search" placeholder="Search" v-model="searchKey" >
           </div>
         </div>
 
@@ -101,7 +102,7 @@
             <option v-else>all</option>
           </select>
           <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-            <a class="relative pr-1 inline-flex items-center rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page != 1 && page != 2" @click="page = pagesFirst"  >
+            <a class="relative pr-1 inline-flex items-center rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page >= 4" @click="page = pagesFirst"  >
               <span class="sr-only">Previous</span>
               <!-- Heroicon name: solid/chevron-left -->
               <img class="w-5 rotate-180" src="https://cdn-icons-png.flaticon.com/512/2722/2722998.png "/>
@@ -112,16 +113,19 @@
               <img class="w-3 rotate-180" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
             </a>
 
-            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium  hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-2, page-1)"  v-if="page != 1">{{pageData}}</a>
-            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium underline hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page+5)" v-if="page == pageData">{{pageData}}</a>
-            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page+5)" v-if="page != pageData">{{pageData}}</a>
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium  hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-2, page-1)"  v-if="page != 1 && page == 2">{{pageData}}</a>
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium  hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-3, page-1)"  v-if="page != 2">{{pageData}}</a>
+
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium underline hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page)" v-if="page == pageData">{{pageData}}</a>
+
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page, page+2)" v-if="page != pageData">{{pageData}}</a>
             
             <a class="relative inline-flex items-center  py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length" @click="page++"  >
               <span class="sr-only">Next</span>
               <!-- Heroicon name: solid/chevron-right -->
               <img class="w-3" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
             </a>
-            <a class="relative inline-flex items-center pl-1 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length && page < pages.length - 1" @click="page = pages.length"  >
+            <a class="relative inline-flex items-center pl-1 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length && page < pages.length - 2" @click="page = pages.length"  >
               <span class="sr-only">Previous</span>
               <!-- Heroicon name: solid/chevron-left -->
               <img class="w-5" src="https://cdn-icons-png.flaticon.com/512/2722/2722998.png "/>
@@ -161,29 +165,37 @@
     },
     methods: {
       async generateTable(){
-        let getCookie = document.cookie
-        let cookie = getCookie.split("Session=")
+        if (this.selectedData == '') {
+          alert('ADN not Selected')
+        } else {
+          let getCookie = document.cookie
+          let cookie = getCookie.split("Session=")
 
-        const response = await axios.post('http://localhost:5000/api/v1/getdataadn', {
-          cookies: cookie[1],
-          keyword: this.keyword,
-          start_date: this.startDate,
-          end_date: this.endDate
-        }).catch((err) => {
-          console.log(err)
-        }).then((res) => {
-          if (res === undefined) {
-            alert("Data Not Found")
-          } else {
-            this.items = res.data.data
-          }
-        })
+          const response = await axios.post('http://localhost:5000/api/v1/getdataadn', {
+            cookies: cookie[1],
+            ADN_Number: this.selectedData,
+            keyword: this.keyword,
+            start_date: this.startDate,
+            end_date: this.endDate
+          }).catch((err) => {
+            console.log(err)
+          }).then((res) => {
+            if (res === undefined) {
+              alert("Data Not Found")
+            } else {
+              this.items = res.data.data
+            }
+          })
+        }
+
+        
       },
       async cekAdn(){
         let getCookie = document.cookie
         let cookie = getCookie.split("Session=")
         const response = await axios.post('http://localhost:5000/api/v1/getkeyword', {
           cookies: cookie[1],
+          ADN_Number: this.selectedData
         }).catch((err) => {
           console.log(err)
         }).then((res) => {
@@ -201,9 +213,6 @@
           data,
           name: name,
         })
-      },
-      search(){
-        console.log(this.page, this.pages.length, this.perPages)
       },
       setPages(posts){
         if (this.perPages == 'all') {
@@ -226,11 +235,6 @@
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
         return posts.slice(from, to)
-      }
-    },
-    watch: {
-      filteredItems() {
-        
       }
     },
     filters: {

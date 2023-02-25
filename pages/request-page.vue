@@ -1,7 +1,7 @@
 <template>
     <div>
-       <Navbar/>
-    <RequestPagesInputForm /> 
+      <Navbar/>
+      <RequestPagesInputForm /> 
     </div>
     
   </template>
