@@ -1,4 +1,5 @@
 const db = require('../config/coonection-db')
+const bcrypt = require('bcryptjs');
 
 exports.getall = (req, res) => {
     console.log("Id: ",res.locals.id)
@@ -61,7 +62,7 @@ exports.getdatauser = (req, res) => {
     })
 }
 
-exports.edituser = (req, res) => {
+exports.edituser = async(req, res) => {
     const {username, password, confirmPassword, status, region, id} = req.body
     if (password == undefined && confirmPassword == undefined || password == '' && confirmPassword == '' ) {
       db.query('UPDATE users SET ? WHERE id = ?', [{user_domain: username, status: status,regional:region}, id], (error, result) => {
@@ -77,9 +78,33 @@ exports.edituser = (req, res) => {
         })
       })
     } else {
-      return res.status(200).json({
-        message: 'Failed Update Data'
-      })
+      if (password != undefined && confirmPassword != undefined || password != '' && confirmPassword != '' ){
+        if (password !== confirmPassword) {
+          return res.status(403).json({
+            message: 'Password do not match'
+          })
+        }
+        // Hashing Password
+        const hashedPassword = await bcrypt.hash(password, 8)
+
+        db.query('UPDATE users SET ? WHERE id = ?', [{user_domain: username, status: status,regional:region, password:hashedPassword}, id], (error, result) => {
+          if (error) {
+            return res.status(500).json({
+              errorMessage: error
+            })
+          }
+          console.log("Update Data",result[0])
+      
+          return res.status(200).json({
+            message: 'Succes Update Data'
+          })
+        })
+      } else {
+        return res.status(200).json({
+          message: 'Failed Update Data'
+        })
+      }
+      
     }
 }
 
