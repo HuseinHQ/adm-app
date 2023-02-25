@@ -1,7 +1,7 @@
-const db = require('../config/coonection-db')
+const db_3934 = require('../config/database_ADN/db_3934')
 
 exports.getdata = (req, res) => {
-  const { keyword, start_date, end_date} = req.body
+  const { ADN_Number, keyword, start_date, end_date} = req.body
   
   // Cek Data
   let query = ''
@@ -12,7 +12,6 @@ exports.getdata = (req, res) => {
   }
   let data = []
 
-  console.log("Data:", keyword, start_date, end_date)
   if (keyword != '') {
     query += ' sms LIKE ?'
     data.push(keyword)
@@ -34,31 +33,64 @@ exports.getdata = (req, res) => {
       data.push(end_date)
     }
   }
-  console.log(data, query)
-  
-  db.query(query, data, (error, result) => {
-    if (error) {
-      return res.status(500).json({
-        errorMessage: error
+
+  if (ADN_Number == '3934') {
+    const db_3934 = require('../config/database_ADN/db_3934')
+    console.log(query, data)
+    db_3934.query(query, data, (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          errorMessage: error
+        })
+      }
+
+      return res.status(200).json({
+        data: result
       })
-    }
-    console.log(result)
-    return res.status(200).json({
-      data: result
+
     })
-  })
+  }
 }
 
 exports.getkeyword = (req, res) => {
-  db.query('SELECT keyword FROM keyword', (error, result) => {
-    if (error) {
-      return res.status(500).json({
-        errorMessage: error
-      })
-    }
+  const { ADN_Number } = req.body
+  if (ADN_Number == '3934') {
+    // Query get keyword data
+    db_3934.query('SELECT keyword FROM keyword', (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          errorMessage: error
+        })
+      }
 
-    return res.status(200).json({
-      data: result
+      return res.status(200).json({
+        data: result
+      }) 
     })
+
+    // Disconnect database
+    
+
+  }
+  
+}
+
+exports.requestADN = (res, req) => {
+  const { ADN_Number, ADN_Type, keyword, ADN_Price, sms_success, sms_reject, program_start, program_end, program_desc, program_name} = req.body
+  if (ADN_Number == '3439') {
+    const db_3934 = require('../config/database_ADN/db_3934')
+  }
+  
+
+  db_3934.end((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("MySQL Disconnected....")
+    }
+  })
+
+  return res.status(200).json({
+    message: "Succes Request Adn"
   })
 }
