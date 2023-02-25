@@ -209,7 +209,12 @@
         let perPage = parseInt(this.perPages);
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
-        return posts.slice(form, to)
+        return posts.slice(from, to)
+      }
+    },
+    watch: {
+      filteredItems() {
+        this.setPages()
       }
     },
     filters: {
