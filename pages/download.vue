@@ -94,28 +94,36 @@
         <div class="flex items-center mt-8 pb-6 ml-6 ">
           <h3 class="px-3 font-semibold text-sm inline">View loads per page</h3>
           <select v-model="perPages" class="inline-block border border-slate-400 rounded-md mx-3 p-1">
-            <option selected value="2">2</option>
+            <option selected value="1">1</option>
             <option value="4">4</option>
             <option value="6">6</option>
             <option>20</option>
           </select>
           <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page != 1" @click="page--"  >
+            <a class="relative inline-flex items-center rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page != 1" @click="page = pagesFirst"  >
+              <span class="sr-only">Previous</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <img class="w-6 rotate-180" src="https://cdn-icons-png.flaticon.com/512/2722/2722998.png "/>
+            </a>
+            <a class="relative inline-flex items-center pr-2 py-2 rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page != 1" @click="page--"  >
               <span class="sr-only">Previous</span>
               <!-- Heroicon name: solid/chevron-left -->
               <img class="w-4 rotate-180" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
             </a>
 
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page+5)">{{pageData}}</a>
-            <!-- <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">2</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">3</a>
-            <span class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium">...</span>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">8</a>
-            <a href="#" class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200">9</a> -->
-            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length" @click="page++"  >
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium  hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-2, page-1)"  v-if="page != 1">{{pageData}}</a>
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium underline hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page+5)" v-if="page == pageData">{{pageData}}</a>
+            <a class="relative inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-slate-200" @click="page = pageData" v-for="pageData in pages.slice(page-1, page+5)" v-if="page != pageData">{{pageData}}</a>
+            
+            <a class="relative inline-flex items-center pl-2 py-2 rounded-r-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length" @click="page++"  >
               <span class="sr-only">Next</span>
               <!-- Heroicon name: solid/chevron-right -->
               <img class="w-4" src="https://cdn-icons-png.flaticon.com/512/271/271228.png"/>
+            </a>
+            <a class="relative inline-flex items-center rounded-l-md text-sm font-medium text-gray-500 hover:bg-gray-50" v-if="page < pages.length" @click="page = pages.length"  >
+              <span class="sr-only">Previous</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <img class="w-6" src="https://cdn-icons-png.flaticon.com/512/2722/2722998.png "/>
             </a>
           </nav>
         </div>
@@ -141,7 +149,7 @@
         searchKey: '',
         itemsKeyword: [],
         items: [],
-        itemsTempory: [],
+        pagesFirst: 0,
         pages: [],
         page: 1,
         perPages: 6,
@@ -197,14 +205,19 @@
         console.log(this.page, this.pages.length, this.perPages)
       },
       setPages(){
+        
         let numberOfPages = Math.ceil(this.items.length / this.perPages)
         for (let index = 1; index <= numberOfPages; index++) {
+          console.log(index)
+          if (index == 1) {
+            this.pagesFirst = index
+          }
           this.pages.push(index)
         }
       },
       paginate(posts) {
         this.pages = []
-        console.log('Active')
+        console.log('delete')
         let page = this.page;
         let perPage = parseInt(this.perPages);
         let from = (page * perPage) - perPage;
