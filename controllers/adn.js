@@ -76,19 +76,21 @@ exports.getkeyword = (req, res) => {
 }
 
 exports.requestADN = (res, req) => {
-  const { ADN_Number, ADN_Type, keyword, ADN_Price, sms_success, sms_reject, program_start, program_end, program_desc, program_name} = req.body
-  if (ADN_Number == '3439') {
-    const db_3934 = require('../config/database_ADN/db_3934')
-  }
+  const { ADN_Number, ADN_Type, keyword, ADN_Price, sms_success, sms_reject, program_start, program_end, program_desc, program_name, created_date} = req.body
   
+  if (ADN_Number == '3439') {
+    const data_keyword = {keyword:keyword, adn_type:ADN_Type, start_date:program_start,exp_date:program_end, descript:program_desc, status:'ACTIVE', created_date:created_date}
+    db_3934.query('INSERT INTO keyword SET ?', data_keyword , (error) => {
+      if (error) {
+        return res.status(500).json({
+          errorMessage: error
+        })
+      }
 
-  db_3934.end((err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log("MySQL Disconnected....")
-    }
-  })
+      // db_3934.query('INSERT INTO adn_wording')
+    })
+  }
+
 
   return res.status(200).json({
     message: "Succes Request Adn"
