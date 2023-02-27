@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-16">
-    <div id="app" class="flex flex-col">
+  <div class="mt-[8%]">
+    <div id="app" class="h-full flex-col flex justify-center align-middle">
       <LoginTitle />
       <Form />
       <img class="vector1" src="../assets/image/vector1.png" alt="vector">

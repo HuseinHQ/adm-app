@@ -11,17 +11,16 @@
             <TextAreaComponent title="SMS Replay Reject" rows="8" />
         </div>
         <div class="forth-row-right">
-            
             <div id="input-area">
                 <InputComponent type="text" title="Data Label" placeholder="e.g SIK" />
-                <div >
-                    <ActionButton childclass="bg-green-500 w-10 h-10 rounded"  />
+                <div class="flex justify-items-start items-end">
+                    <button class="bg-green-500 w-10 h-10 rounded text-4xl text-white" >+</button>
                 </div>
-                
-            </div>
-            
+            </div>            
         </div>
-        
+            <div class="mt-10 grid justify-items-end pr-20">
+                <button class=" bg-blue-500 w-140 h-15 rounded-md text-base p-2 text-white px-9">Submit</button>
+            </div>
     </div>
 
     
@@ -58,7 +57,7 @@ export default {
 
     #input-area{
         display: grid;
-        grid-template-columns: 6fr 1fr
+        grid-template-columns: 5fr 1fr
     }
     .label-forth-row-right {
       font-weight: 700;

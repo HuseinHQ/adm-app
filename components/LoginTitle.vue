@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 mb-8 mx-auto">
+  <div class="w-full mt-8 mb-8 mx-auto">
     <h1 class="font-black text-slate-700 drop-shadow-sm text-3xl text-center">WELCOME TO</h1>
     <h2 class="font-extrabold text-slate-900 drop-shadow-sm text-xl text-center">ADN DOWNLOAD MANAGER</h2>
   </div>

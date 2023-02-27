@@ -1,20 +1,24 @@
 <template>
     <div>
         <Navbar />
-        <div class="form-add">
-            <p class="title-form">Add New User</p>
-            <form action="" class="flex flex-row flex-auto">
-                <div class="w-1/2">
-                    <label for="username" class="label-username">Username</label>
-                    <input class="input-add"  type="text" required name="username" id="username" placeholder="e.g john.com" v-model="username">
+        <div class="add-user-container flex justify-center align-middle">
+          <div class="form-add w-1/2 mt-10 bg-white mx-auto rounded-md shadow-md">
+            <p class="title-form text-xl font-bold pt-6 pb-2 mx-7">Add New User</p>
+            <form action="" class="flex flex-row flex-auto ml-6 mr-6 pb-6">
+                <div class="w-1/2 ">
+                    <div class="mr-3">
+                        <label for="username " class="block mb-2 text-md font-medium text-slate-500">Username</label>
+                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" required name="username" id="username" placeholder="e.g john.com" v-model="username">     
+                    </div>
                     
-                    <label for="regional" class="label-regional">Regional</label>
-                    <input class="input-add"  type="text" required name="regional" id="regional" placeholder="Input Regional" v-model="regional">
-
-                    <label for="status" class="label-status">Status Admin</label>
-                    <div class="selectdiv">
-                        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" class="img-select" alt="" srcset="">
-                        <select class="input-add"  name="status" required autocomplete="off" id="status" placeholder="Select Admin Status" v-model="status">
+                    <div class="mr-3 mt-3">
+                        <label for="regional" class="block mb-2 text-md font-medium text-slate-500">Regional</label>
+                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" required name="regional" id="regional" placeholder="Input Regional" v-model="regional">
+                    </div>
+                    
+                    <div class="mr-3 mt-3">
+                        <label for="status" class="block mb-2 text-md font-medium text-slate-500">Status Admin</label>
+                        <select class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px]"  name="status" required autocomplete="off" id="status" placeholder="Select Admin Status" v-model="status">
                             <option value="" selected hidden disabled class="unselect">Select Admin Status</option>
                             <option value="Web">Admin Web</option>  
                             <option value="Regional">Admin Regional</option>
@@ -26,20 +30,26 @@
                 </div>
                 
                 <div class="w-1/2">
-                    <label for="password" class="label-password">Password</label>
-                    <input class="input-add" type="password" required name="password" id="password" placeholder="e.g ineedadn123" v-model="password">
-
-                    <label for="confirm" class="label-confirm">Confirm Password</label>
-                    <input class="input-add" type="password" required name="confirm" id="confirm" placeholder="e.g ineedadn123" v-model="passwordConfirm" value="{passwordConfirm}">
-
+                    <div class="mr-3">
+                        <label for="password" class="block mb-2 text-md font-medium text-slate-500">Password</label>
+                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="password" name="password" id="password" placeholder="e.g ineedadn123" v-model="password">
+                    </div>
+                    
+                    <div class="mr-3 mt-3">
+                        <label for="confirm" class="block mb-2 text-md font-medium text-slate-500">Confirm Password</label>
+                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="password" name="confirm" id="confirm" placeholder="e.g ineedadn123" v-model="passwordConfirm" value="{passwordConfirm}">
+                    </div>
+                    
                     <div class="mt-9 flex flex-wrap gap-5 justify-center ">
-                        <button class="cancel button-add" type="button" @click="cancel">Cancel</button>
-                        <button type="button" class="save button-add" @click="submitdata">Save</button>
+                        <button class="text-white text-sm font-semibold py-2 px-4 rounded-md bg-green-600" type="button" @click="cancel">Cancel</button>
+                        <button type="button" class="text-white text-sm font-semibold py-2 px-4 rounded-md bg-red-700" @click="submitdata">Save</button>
                     </div>
                 </div>
                 
             </form>
+        </div>  
         </div>
+        
     </div>
     
 </template>
@@ -100,7 +110,15 @@
   
 </script>
 
-<style>
+<!-- <style>
+
+    .add-user-container{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    }
+
     .button-input{
         margin-top: 35px;
         display: flex;
@@ -222,11 +240,7 @@
         background-image: none;
     }
     .form-add {
-        position: absolute;
-        width: 60%;
-        height: 60%;
-        left: 20%;
-        top: 25%;
+        width:1000px;
 
         padding: 48px;
         background: #FFFFFF;
@@ -245,4 +259,4 @@
 
         color: #000000;
     }
-</style>
+</style> -->

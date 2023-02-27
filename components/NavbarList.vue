@@ -1,9 +1,9 @@
 <template>
   <ul class="container">
-    <nuxt-link to="/download">Download ADN</nuxt-link>
+    <nuxt-link to="/download" >Download ADN</nuxt-link>
     <nuxt-link to="/request-page">Request ADN</nuxt-link>
-    <nuxt-link to="/user-management">User Management</nuxt-link>
-    <nuxt-link to="/" >
+    <nuxt-link to="/user-management" >User Management</nuxt-link>
+    <nuxt-link to="/" class="text-sm">
       <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" @click="clearCookie">
         <rect width="40" height="40" fill="url(#pattern0)"/>
         <defs>
@@ -30,7 +30,7 @@
 
 <style scoped>
   .container {
-    width: 56%;
+    width: 60%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 50px;

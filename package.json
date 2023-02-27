@@ -12,13 +12,17 @@
     "lintfix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@json2csv/plainjs": "^6.1.2",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
     "console": "^0.7.2",
     "core-js": "^3.25.3",
+    "export-from-json": "^1.7.2",
     "fortify-js": "^2.2.2",
+    "js2excel": "^1.0.1",
     "nuxt": "^2.15.8",
-    "vue": "^2.7.10",
+    "plainjs": "^0.0.4",
+    "vue": "^2.7.14",
     "vue-fragment": "^1.6.0",
     "vue-server-renderer": "^2.7.10",
     "vue-table-to-excel": "^1.0.6",

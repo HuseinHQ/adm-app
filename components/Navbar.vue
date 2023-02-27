@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="flex ">
     <NavbarTitle />
     <NavbarList />
   </nav>
