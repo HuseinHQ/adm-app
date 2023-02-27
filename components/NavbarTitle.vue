@@ -24,7 +24,7 @@ import axios from 'axios'
       console.log(this.statusweb)
     },
     methods: {
-      async statusAdmin(){
+      async statusAdmin(){  
         let getCookie = document.cookie
         if (getCookie === "") {
           alert("Session is Expired")

@@ -18,7 +18,7 @@
         <div class="fifth-row-left">
           <div class="check-box">
             <input type="checkbox" name="parent-checkbox" value="White-list" id="parent-option" @click="activateOptions">
-            <label for="parent-checkbox">White List</label><br>
+            <label for="parent-checkbox">White List Participant</label><br>
             <div class="check-box-child" >
                 <input type="radio" name="child-checkbox" value="upload-White-list" id="child-option-1" disabled>
             <label for="parent-checkbox">Upload White List</label><br>
