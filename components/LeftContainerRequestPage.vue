@@ -21,10 +21,10 @@
             <label for="parent-checkbox">White List</label><br>
             <div class="check-box-child" >
                 <input type="radio" name="child-checkbox" value="upload-White-list" id="child-option-1" disabled>
-            <label for="parent-checkbox">Upload White List</label><br>
+                <label for="parent-checkbox">Upload White List</label><br>
                 
                 <input type="radio" name="child-checkbox" value="White-list-from-databse" id="child-option-2" disabled="false">
-            <label for="parent-checkbox">WhiteList from Existing Database</label><br>
+                <label for="parent-checkbox">WhiteList from Existing Database</label><br>
             </div>
           </div>
         </div>
