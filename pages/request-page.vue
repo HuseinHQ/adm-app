@@ -38,7 +38,37 @@
               <!-- Program Description -->
               <div class="w-full mt-3 gap-3 mr-3">
                 <label for="program_description" class="block mb-2 text-md font-medium text-slate-500">Program Description</label>
-                <textarea name="program_description" id="program_description" rows="10" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="program_description"></textarea>
+                <textarea name="program_description" id="program_description" rows="11" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="program_description"></textarea>
+              </div>
+
+              <!-- Date Input -->
+              <div class="mr-3 mt-3 flex gap-3 w-full">
+                <!-- Start Date -->
+                <div class="w-1/2">
+                  <label for="program_start" class="block mb-2 text-md font-medium text-slate-500">Program Start</label>
+                  <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="date" name="program_start" id="program_start" v-model="program_start" >
+                </div>
+
+                <!-- End Date -->
+                <div class="w-1/2">
+                  <label for="program_end" class="block mb-2 text-md font-medium text-slate-500">Program End</label>
+                  <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="date" name="program_end" id="program_end" v-model="program_end" >
+                </div>
+              </div>
+
+              <!-- White List -->
+              <div class="w-full mr-3 mt-3 flex flex-col">
+                <div class="w-full">
+                  <input type="checkbox" name="parent-checkbox" value="White-list" id="parent-option" @click="activateOptions">
+                  <label for="parent-checkbox" >White List</label><br>
+                </div>
+                <div class="pl-3" >
+                  <input type="radio" name="child-checkbox" value="upload-White-list" id="child-option-1" disabled>
+                  <label for="parent-checkbox">Upload White List</label><br>
+                  
+                  <input type="radio" name="child-checkbox" value="White-list-from-databse" id="child-option-2" disabled="false">
+                  <label for="parent-checkbox">WhiteList from Existing Database</label><br>
+                </div>
               </div>
             </div>
 
@@ -76,19 +106,32 @@
                 <textarea name="replay_reject" id="replay_reject" rows="8" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="replay_reject"></textarea>
               </div>
 
+              <!-- Data Label -->
+              <div class="w-full mt-3 mr-3">
+                <div class="w-full">
+                  <label for="data_label " class="block mb-2 text-md font-medium text-slate-500">Data Label</label>
+                  <div class="flex gap-3">
+                    <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" required name="data_label" id="data_label" placeholder="e.g SIK" v-model="data_label">
+                    <button class="bg-green-500 w-10 h-10 rounded text-4xl text-white" >+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Button Submit -->
+              <div class="w-full flex justify-end mt-6">
+                <button class=" bg-blue-500 w-140 h-15 rounded-md text-base p-2 text-white px-9">Submit</button>
+              </div>
             </div>
           </form>
         </div>
       </div>
 
-      <RequestPagesInputForm /> 
     </div>
     
   </template>
   
   <script>
     import Navbar from '../components/Navbar.vue';
-    import RequestPagesInputForm from '../components/RequestPagesInputForm.vue';
     export default {
       name: 'RequestPage',
       data() {
@@ -101,11 +144,18 @@
           replay_success: '',
           replay_reject: '',
           program_description: '',
+          program_start: '',
+          program_end: '',
+          data_label: '',
         }
       },
       components: {
-        Navbar,
-        RequestPagesInputForm 
+        Navbar
+      },
+      methods: {
+        activateOptions(){
+
+        }
       } 
       
     }

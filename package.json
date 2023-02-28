@@ -22,6 +22,7 @@
     "js2excel": "^1.0.1",
     "nuxt": "^2.15.8",
     "plainjs": "^0.0.4",
+    "sweetalert2": "^11.7.2",
     "vue": "^2.7.14",
     "vue-fragment": "^1.6.0",
     "vue-server-renderer": "^2.7.10",
