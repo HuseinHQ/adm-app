@@ -91,7 +91,7 @@
                 </td>
                 <td
                   class="px-6 py-3 whitespace-nowrap"
-                  v-if="statusweb === 'Regional'"
+                  v-if="statusweb === 'Web'"
                 >
                   <nuxt-link
                     class="inline bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-md"
@@ -99,7 +99,7 @@
                     >Edit</nuxt-link
                   >
                   <nuxt-link
-                    @click="deleteUser"
+                    v-on:click.prevent="deleteUser"
                     class="inline bg-red-500 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded-md"
                     :to="'/delete?id=' + item.id"
                     >Delete</nuxt-link
