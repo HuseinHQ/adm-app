@@ -13,6 +13,7 @@
 import axios from 'axios'
 import Form from '../components/Form.vue'
 import LoginTitle from '../components/LoginTitle.vue';
+import Swal from 'sweetalert2';
 
 export default {
     name: "IndexPage",

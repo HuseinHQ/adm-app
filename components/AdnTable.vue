@@ -3,11 +3,36 @@
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">No</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">MSISDN</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">SMS</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">Tanggal</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider">Waktu</th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider"
+          >
+            No
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider"
+          >
+            MSISDN
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider"
+          >
+            SMS
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider"
+          >
+            Tanggal
+          </th>
+          <th
+            scope="col"
+            class="px-6 py-3 text-left text-xs font-semibold bg-slate-200 uppercase tracking-wider"
+          >
+            Waktu
+          </th>
         </tr>
       </thead>
       <tbody v-for="item in items" class="bg-white divide-y divide-gray-200">
@@ -25,29 +50,35 @@
 
 <script>
 import axios from 'axios'
-  export default {
-    name: 'AdnTable',
-    data(){
-      return{
-        items: []
-      }
-    },
-    async created() {
-      let getCookie = document.cookie
-      let cookie = getCookie.split("Session=")
-      const response = await axios.post('http://localhost:5000/api/v1/getdataadn', {
+export default {
+  name: 'AdnTable',
+  data() {
+    return {
+      items: [],
+    }
+  },
+  async created() {
+    let getCookie = document.cookie
+    let cookie = getCookie.split('Session=')
+    const response = await axios
+      .post('http://localhost:5000/api/v1/getdataadn', {
         cookies: cookie[1],
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err)
-      }).then((res) => {
-        if (res === undefined) {
-          alert("Data Not Found")
+      })
+      .then((res) => {
+        if (res === undefined || res === '') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Data Not Found!',
+            text: 'Something went wrong!',
+          })
         } else {
           console.log(res.data.data)
           this.items = res.data.data
         }
       })
-      
-    }
-  }
+  },
+}
 </script>

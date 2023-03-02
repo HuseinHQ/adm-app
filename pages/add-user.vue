@@ -1,113 +1,192 @@
 <template>
-    <div>
-        <Navbar />
-        <div class="add-user-container flex justify-center align-middle">
-          <div class="form-add w-1/2 mt-10 bg-white mx-auto rounded-md shadow-md">
-            <p class="title-form text-xl font-bold pt-6 pb-2 mx-7">Add New User</p>
-            <form action="" class="flex flex-row flex-auto ml-6 mr-6 pb-6">
-                <div class="w-1/2 ">
-                    <div class="mr-3">
-                        <label for="username " class="block mb-2 text-md font-medium text-slate-500">Username</label>
-                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" required name="username" id="username" placeholder="e.g john.com" v-model="username">     
-                    </div>
-                    
-                    <div class="mr-3 mt-3">
-                        <label for="regional" class="block mb-2 text-md font-medium text-slate-500">Regional</label>
-                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" required name="regional" id="regional" placeholder="Input Regional" v-model="regional">
-                    </div>
-                    
-                    <div class="mr-3 mt-3">
-                        <label for="status" class="block mb-2 text-md font-medium text-slate-500">Status Admin</label>
-                        <select class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px]"  name="status" required autocomplete="off" id="status" placeholder="Select Admin Status" v-model="status">
-                            <option value="" selected hidden disabled class="unselect">Select Admin Status</option>
-                            <option value="Web">Admin Web</option>  
-                            <option value="Regional">Admin Regional</option>
-                            <option value="User">Admin User</option>
-                        </select>
-                    </div>
-                    
-                    
-                </div>
-                
-                <div class="w-1/2">
-                    <div class="mr-3">
-                        <label for="password" class="block mb-2 text-md font-medium text-slate-500">Password</label>
-                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="password" name="password" id="password" placeholder="e.g ineedadn123" v-model="password">
-                    </div>
-                    
-                    <div class="mr-3 mt-3">
-                        <label for="confirm" class="block mb-2 text-md font-medium text-slate-500">Confirm Password</label>
-                        <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="password" name="confirm" id="confirm" placeholder="e.g ineedadn123" v-model="passwordConfirm" value="{passwordConfirm}">
-                    </div>
-                    
-                    <div class="mt-9 flex flex-wrap gap-5 justify-center ">
-                        <button class="text-white text-sm font-semibold py-2 px-4 rounded-md bg-green-600" type="button" @click="cancel">Cancel</button>
-                        <button type="button" class="text-white text-sm font-semibold py-2 px-4 rounded-md bg-red-700" @click="submitdata">Save</button>
-                    </div>
-                </div>
-                
-            </form>
-        </div>  
-        </div>
-        
+  <div>
+    <Navbar />
+    <div class="add-user-container flex justify-center align-middle">
+      <div class="form-add w-1/2 mt-10 bg-white mx-auto rounded-md shadow-md">
+        <p class="title-form text-xl font-bold pt-6 pb-2 mx-7">Add New User</p>
+        <form action="" class="flex flex-row flex-auto ml-6 mr-6 pb-6">
+          <div class="w-1/2">
+            <div class="mr-3">
+              <label
+                for="username "
+                class="block mb-2 text-md font-medium text-slate-500"
+                >Username</label
+              >
+              <input
+                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"
+                type="text"
+                required
+                name="username"
+                id="username"
+                placeholder="e.g john.com"
+                v-model="username"
+              />
+            </div>
+
+            <div class="mr-3 mt-3">
+              <label
+                for="regional"
+                class="block mb-2 text-md font-medium text-slate-500"
+                >Regional</label
+              >
+              <input
+                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"
+                type="text"
+                required
+                name="regional"
+                id="regional"
+                placeholder="Input Regional"
+                v-model="regional"
+              />
+            </div>
+
+            <div class="mr-3 mt-3">
+              <label
+                for="status"
+                class="block mb-2 text-md font-medium text-slate-500"
+                >Status Admin</label
+              >
+              <select
+                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px]"
+                name="status"
+                required
+                autocomplete="off"
+                id="status"
+                placeholder="Select Admin Status"
+                v-model="status"
+              >
+                <option value="" selected hidden disabled class="unselect">
+                  Select Admin Status
+                </option>
+                <option value="Web">Admin Web</option>
+                <option value="Regional">Admin Regional</option>
+                <option value="User">Admin User</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-1/2">
+            <div class="mr-3">
+              <label
+                for="password"
+                class="block mb-2 text-md font-medium text-slate-500"
+                >Password</label
+              >
+              <input
+                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="e.g ineedadn123"
+                v-model="password"
+              />
+            </div>
+
+            <div class="mr-3 mt-3">
+              <label
+                for="confirm"
+                class="block mb-2 text-md font-medium text-slate-500"
+                >Confirm Password</label
+              >
+              <input
+                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"
+                type="password"
+                name="confirm"
+                id="confirm"
+                placeholder="e.g ineedadn123"
+                v-model="passwordConfirm"
+                value="{passwordConfirm}"
+              />
+            </div>
+
+            <div class="mt-9 flex flex-wrap gap-5 justify-center">
+              <button
+                class="text-white text-sm font-semibold py-2 px-4 rounded-md bg-green-600"
+                type="button"
+                @click="cancel"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="text-white text-sm font-semibold py-2 px-4 rounded-md bg-red-700"
+                @click="submitdata"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    
+  </div>
 </template>
 
 <script>
-  import Navbar from '~/components/Navbar.vue';
-  import axios from 'axios';
-  //import Fortify from "fortify-js";
+import Navbar from '~/components/Navbar.vue'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
-
-  export default {
-    name: "AddUser",
-    data() {
-      return {
-        username: '',
-        password: '',
-        passwordConfirm: '',
-        status: '',
-        regional: '',
+export default {
+  name: 'AddUser',
+  data() {
+    return {
+      username: '',
+      password: '',
+      passwordConfirm: '',
+      status: '',
+      regional: '',
+    }
+  },
+  created() {},
+  methods: {
+    cancel() {
+      window.location.href = '/user-management'
+    },
+    async submitdata() {
+      if (this.username == '' && this.password == '') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Empty Data!',
+          text: 'Please fill all the requirement fields',
+        })
+      } else {
+        await axios
+          .post('http://localhost:5000/api/v1/register', {
+            username: this.username,
+            password: this.password,
+            passwordConfirm: this.passwordConfirm,
+            region: this.regional,
+            status: this.status,
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          .then((res) => {
+            if (res === undefined) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Invalid Data',
+                text: 'Looks like the username is already taken!',
+              })
+            } else {
+              if (res.status === 201) {
+                window.location.href = '/user-management'
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'User has been saved',
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+              }
+            }
+          })
       }
     },
-    created() {
-        
-        
-    }, 
-    methods: {
-        cancel() {
-            window.location.href = '/user-management';
-        },
-        async submitdata() {
-            if (this.username == '' && this.password == '') {
-                window.alert('Empty Data !!')
-            } else {
-                await axios.post('http://localhost:5000/api/v1/register', {
-                    "username" : this.username,
-                    "password" : this.password,
-                    "passwordConfirm" : this.passwordConfirm,
-                    "region" : this.regional,
-                    "status" : this.status
-                }).catch((err) => {
-                    console.log(err)
-                }).then((res) => {
-                    if (res === undefined) {
-                        alert("Empty data!")
-                    } else{
-                        if (res.status === 201) {
-                            window.location.href = '/user-management';
-                        }
-                    }
-                })
-            }
-            
-        }
-    },
-    components: { Navbar}
-  } 
-
-  
+  },
+  components: { Navbar },
+}
 </script>
 
 <!-- <style>

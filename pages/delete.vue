@@ -35,7 +35,7 @@ export default {
               alert('Incorrect Id - ' + ulrParams.get('id') + '!!')
             } else {
               if (res.status == 200) {
-                Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+                Swal.fire('Deleted!', 'User has been deleted.', 'success')
                 window.location.href = '/user-management'
               }
             }

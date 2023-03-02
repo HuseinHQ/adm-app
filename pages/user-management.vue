@@ -99,7 +99,6 @@
                     >Edit</nuxt-link
                   >
                   <nuxt-link
-                    v-on:click.prevent="deleteUser"
                     class="inline bg-red-500 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded-md"
                     :to="'/delete?id=' + item.id"
                     >Delete</nuxt-link
@@ -264,21 +263,6 @@ export default {
       json2excel({
         data,
         name: name,
-      })
-    },
-    deleteUser() {
-      this.Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
-        }
       })
     },
     setPages(posts) {
