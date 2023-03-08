@@ -29,15 +29,22 @@
                 class="block mb-2 text-md font-medium text-slate-500"
                 >Regional</label
               >
-              <input
-                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"
-                type="text"
-                required
+
+              <select
+                class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px]"
                 name="regional"
+                required
+                autocomplete="off"
                 id="regional"
-                placeholder="Input Regional"
+                placeholder="Select regional"
                 v-model="regional"
-              />
+              >
+                <option value="" selected hidden disabled class="unselect">
+                  Select Region
+                </option>
+                <option value="BALNUS">BALNUS</option>
+                <option value="JATIM">JATIM</option>
+              </select>
             </div>
 
             <div class="mr-3 mt-3">

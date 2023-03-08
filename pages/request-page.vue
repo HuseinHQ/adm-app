@@ -38,7 +38,7 @@
               <!-- Program Description -->
               <div class="w-full mt-3 gap-3 mr-3">
                 <label for="program_description" class="block mb-2 text-md font-medium text-slate-500">Program Description</label>
-                <textarea name="program_description" id="program_description" rows="11" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="program_description"></textarea>
+                <textarea required name="program_description" id="program_description" rows="11" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="program_description"></textarea>
               </div>
 
               <!-- Date Input -->
@@ -46,13 +46,13 @@
                 <!-- Start Date -->
                 <div class="w-1/2">
                   <label for="program_start" class="block mb-2 text-md font-medium text-slate-500">Program Start</label>
-                  <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="date" name="program_start" id="program_start" v-model="program_start" >
+                  <input required class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="date" name="program_start" id="program_start" v-model="program_start" >
                 </div>
 
                 <!-- End Date -->
                 <div class="w-1/2">
                   <label for="program_end" class="block mb-2 text-md font-medium text-slate-500">Program End</label>
-                  <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="date" name="program_end" id="program_end" v-model="program_end" >
+                  <input required class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300" type="date" name="program_end" id="program_end" v-model="program_end" >
                 </div>
               </div>
 
@@ -97,13 +97,13 @@
               <!-- SMS Success -->
               <div class="w-full mt-3 gap-3 mr-3">
                 <label for="replay_success" class="block mb-2 text-md font-medium text-slate-500">SMS Replay Success</label>
-                <textarea name="replay_success" id="replay_success" rows="8" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="replay_success"></textarea>
+                <textarea name="replay_success" id="replay_success" rows="8" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" required v-model="replay_success"></textarea>
               </div>
 
               <!-- SMS Reject -->
               <div class="w-full mt-3 gap-3 mr-3">
                 <label for="replay_reject" class="block mb-2 text-md font-medium text-slate-500">SMS Replay Reject</label>
-                <textarea name="replay_reject" id="replay_reject" rows="8" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" v-model="replay_reject"></textarea>
+                <textarea name="replay_reject" id="replay_reject" rows="8" class="w-full border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-4 py-[10px] placeholder:text-slate-300" required v-model="replay_reject"></textarea>
               </div>
 
               <!-- Data Label -->
@@ -111,7 +111,7 @@
                 <div class="w-full">
                   <label for="data_label " class="block mb-2 text-md font-medium text-slate-500">Data Label</label>
                   <div class="flex gap-3">
-                    <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" required name="data_label" id="data_label" placeholder="e.g SIK" v-model="data_label">
+                    <input class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px] placeholder:text-slate-300"  type="text" name="data_label" id="data_label" placeholder="e.g SIK" v-model="data_label">
                     <button class="bg-green-500 w-10 h-10 rounded text-4xl text-white" >+</button>
                   </div>
                 </div>
@@ -161,35 +161,37 @@
         async sendData() {
           let getCookie = document.cookie
           let cookie = getCookie.split('Session=')
-          var today = new Date(); 
-          var time = today.getHours() + ":" + today
 
-          console.log(this.ADN_Number)
-          await axios
-            .post('http://localhost:5000/api/v1/request-adn', {
-              cookies: cookie[1],
-              ADN_Number: this.ADN_Number,
-              ADN_Type: this.ADN_Type,
-              keyword: this.keyword,
-              ADN_Price: this.ADN_Price,
-              sms_success: this.replay_success,
-              sms_reject: this.replay_reject,
-              program_start: this.program_start,
-              program_end: this.program_end,
-              program_desc: this.program_description,
-              program_name: this.program_name,
-              created_date: time,
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-            .then((res) => {
-              if (res === undefined) {
-                alert('Data Not Found')
-              } else {
-                alert(res.message)
-              }
-            })
+          if (this.ADN_Number == 0 || this.keyword == '' || this.ADN_Type == '' || this.program_end == '' ||
+          this.program_start == '' || this.replay_success == '' || this.replay_reject == '' ) {
+            alert("Data Tidak Boleh Kosong")
+          } else {
+            console.log(this.ADN_Number)
+            await axios
+              .post('http://localhost:5000/api/v1/request-adn', {
+                cookies: cookie[1],
+                ADN_Number: this.ADN_Number,
+                ADN_Type: this.ADN_Type,
+                keyword: this.keyword,
+                ADN_Price: this.ADN_Price,
+                sms_success: this.replay_success,
+                sms_reject: this.replay_reject,
+                program_start: this.program_start,
+                program_end: this.program_end,
+                program_desc: this.program_description,
+                program_name: this.program_name
+              })
+              .catch((err) => {
+                console.log(err)
+              })
+              .then((res) => {
+                if (res === undefined) {
+                  alert('Data Not Found')
+                } else {
+                  alert(res.data.message)
+                }
+              })
+          }
         }
       } 
       
