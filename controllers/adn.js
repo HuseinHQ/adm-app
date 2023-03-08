@@ -73,10 +73,10 @@ exports.getkeyword = (req, res) => {
 
 exports.requestADN = (req, res) => {
   console.log(req.body)
-  const { ADN_Number, ADN_Type, keyword, ADN_Price, sms_success, sms_reject, program_start, program_end, program_desc, program_name, created_date } = req.body
+  const { ADN_Number, ADN_Type, keyword, ADN_Price, sms_success, sms_reject, program_start, program_end, program_desc, program_name} = req.body
   
   if (ADN_Number == '3439') {
-    const data_keyword = {keyword:keyword, adn_type:ADN_Type, start_date:program_start,exp_date:program_end, descript:program_desc, status:'ACTIVE', created_date:created_date}
+    const data_keyword = {keyword:keyword, adn_type:ADN_Type, start_date:program_start,exp_date:program_end, descript:program_desc, status:'ACTIVE'}
     db_3934.query('INSERT INTO keyword SET ?', data_keyword , (error) => {
       if (error) {
         return res.status(500).json({
@@ -99,7 +99,7 @@ exports.requestADN = (req, res) => {
             })
           }
 
-          const dataAdmin = {id_admin:result[0].id, adn_number:ADN_Number, user_domain:result[0].user_domain, regional:result[0].regional, keyword:keyword, status:'ACTIVE', update_date:created_date}
+          const dataAdmin = {id_admin:result[0].id, adn_number:ADN_Number, user_domain:result[0].user_domain, regional:result[0].regional, keyword:keyword, status:'ACTIVE'}
           db_3934.query('INSERT INTO adn_admin SET ?', dataAdmin, (error) => {
             if (error) {
               return res.status(500).json({
