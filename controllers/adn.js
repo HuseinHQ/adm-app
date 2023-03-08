@@ -16,7 +16,6 @@ exports.getdata = (req, res) => {
   if (keyword != '') {
     query += ' sms LIKE ?'
     data.push(keyword)
-    
   }
   if (start_date != '' && keyword != '' || end_date != '' && keyword != '') {
     query += ' AND'
