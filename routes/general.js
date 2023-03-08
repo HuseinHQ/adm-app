@@ -13,7 +13,7 @@ router.post('/get-status', authController.checkSession, authController.getStatus
 // ADN
 router.post('/getdataadn', authController.checkSession, adnController.getdata)
 router.post('/getkeyword', authController.checkSession, adnController.getkeyword)
-router.post('/request-adn', adnController.requestADN)
+router.post('/request-adn', authController.checkSession, adnController.requestADN)
 
 // User Management
 router.post('/get-user', authController.checkSession, userManagementController.getall)

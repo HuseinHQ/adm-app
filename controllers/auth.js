@@ -90,8 +90,8 @@ exports.logout = (req, res) => {
 }
 
 exports.checkSession = (req, res, next) => {
+  console.log(req.body)
   const {cookies} = req.body
-  console.log(cookies)
   if (cookies == undefined) {
     return res.status(403).json({
       message: 'access is denied'
@@ -107,7 +107,6 @@ exports.checkSession = (req, res, next) => {
   }
   
   res.locals.id = resultToken.data
-  console.log(resultToken.data)
   next()
 }
 
