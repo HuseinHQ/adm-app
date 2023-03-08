@@ -99,7 +99,7 @@ exports.requestADN = (req, res) => {
             })
           }
 
-          const dataAdmin = {id_admin:result[0].id, user_domain:result[0].user_domain, regional:result[0].regional, keyword:keyword, status:'ACTIVE', update_date:created_date}
+          const dataAdmin = {id_admin:result[0].id, adn_number:ADN_Number, user_domain:result[0].user_domain, regional:result[0].regional, keyword:keyword, status:'ACTIVE', update_date:created_date}
           db_3934.query('INSERT INTO adn_admin SET ?', dataAdmin, (error) => {
             if (error) {
               return res.status(500).json({
