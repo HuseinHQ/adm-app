@@ -15,7 +15,7 @@
                 <!-- ADN Number Input -->
                 <div class="w-1/2">
                   <label for="adn_number" class="block mb-2 text-md font-medium text-slate-500">ADN Number</label>
-                  <select class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px]"  name="adn_number" required autocomplete="off" id="adn_number" placeholder="Select ADN Number" v-model="ADN_Number">
+                  <select class="border border-slate-500 text-black text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-[100%] px-4 py-[10px]"  name="ADN_Number" required autocomplete="off" id="ADN_Number" placeholder="Select ADN Number" v-model="ADN_Number">
                     <option value="" selected hidden disabled class="unselect">Select ADN Number</option>
                     <option value="3439" >3439</option>
                     <option value="2367" >2367</option>
@@ -119,7 +119,7 @@
 
               <!-- Button Submit -->
               <div class="w-full flex justify-end mt-6">
-                <button class=" bg-blue-500 w-140 h-15 rounded-md text-base p-2 text-white px-9">Submit</button>
+                <button class=" bg-blue-500 w-140 h-15 rounded-md text-base p-2 text-white px-9" v-on:click.prevent="sendData" >Submit</button>
               </div>
             </div>
           </form>
@@ -131,15 +131,16 @@
   </template>
   
   <script>
+    import axios from 'axios'
     import Navbar from '../components/Navbar.vue';
     export default {
       name: 'RequestPage',
       data() {
         return {
-          ADN_Number: '',
+          ADN_Number: 0,
           keyword: '',
           ADN_Type: '',
-          price: '',
+          price: 0,
           program_name: '',
           replay_success: '',
           replay_reject: '',
@@ -147,6 +148,7 @@
           program_start: '',
           program_end: '',
           data_label: '',
+          ADN_Price: '',
         }
       },
       components: {
@@ -155,6 +157,39 @@
       methods: {
         activateOptions(){
 
+        },
+        async sendData() {
+          let getCookie = document.cookie
+          let cookie = getCookie.split('Session=')
+          var today = new Date(); 
+          var time = today.getHours() + ":" + today
+
+          console.log(this.ADN_Number)
+          await axios
+            .post('http://localhost:5000/api/v1/request-adn', {
+              cookies: cookie[1],
+              ADN_Number: this.ADN_Number,
+              ADN_Type: this.ADN_Type,
+              keyword: this.keyword,
+              ADN_Price: this.ADN_Price,
+              sms_success: this.replay_success,
+              sms_reject: this.replay_reject,
+              program_start: this.program_start,
+              program_end: this.program_end,
+              program_desc: this.program_description,
+              program_name: this.program_name,
+              created_date: time,
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+            .then((res) => {
+              if (res === undefined) {
+                alert('Data Not Found')
+              } else {
+                alert(res.message)
+              }
+            })
         }
       } 
       
