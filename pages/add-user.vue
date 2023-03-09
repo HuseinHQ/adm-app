@@ -171,14 +171,14 @@ export default {
               })
             } else {
               if (res.status === 201) {
-                window.location.href = '/user-management'
                 Swal.fire({
                   position: 'center',
                   icon: 'success',
                   title: 'User has been saved',
                   showConfirmButton: false,
-                  timer: 1500,
+                  timer: 60000,
                 })
+                window.location.href = '/user-management?status="success"'
               }
             }
           })
