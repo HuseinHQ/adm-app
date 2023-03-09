@@ -331,7 +331,7 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Mohon lengkapi data dengan benar!',
+          text: 'Please fill the data correctly!',
         })
       } else {
         console.log(this.ADN_Number)
@@ -363,7 +363,7 @@ export default {
               Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: 'Request ADN berhasil',
+                text: 'Request ADN success',
               })
             }
           })

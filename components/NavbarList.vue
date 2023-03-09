@@ -2,8 +2,7 @@
   <ul class="container">
     <nuxt-link to="/download">Download ADN</nuxt-link>
     <nuxt-link v-if="statusweb === 'Web'" to="/request-page"
-      >Request ADN</nuxt-link
-    >
+      >Request ADN</nuxt-link>
     <nuxt-link to="/user-management">User Management</nuxt-link>
     <button @click="clearCookie" class="text-sm">
       <svg
