@@ -32,11 +32,12 @@ export default {
           })
           .then((res) => {
             if (res === undefined) {
-              alert('Incorrect Id - ' + ulrParams.get('id') + '!!')
+              window.location.href = '/user-management?statusMessage=failed-delete'
             } else {
               if (res.status == 200) {
-                Swal.fire('Deleted!', 'User has been deleted.', 'success')
-                window.location.href = '/user-management'
+                window.location.href = '/user-management?statusMessage=success-delete'
+              } else {
+                window.location.href = '/user-management?statusMessage=failed-delete'
               }
             }
           })

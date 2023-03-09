@@ -203,14 +203,7 @@ export default {
               })
             } else {
               if (res.status === 201) {
-                Swal.fire({
-                  position: 'center',
-                  icon: 'success',
-                  title: 'User has been saved',
-                  showConfirmButton: false,
-                  timer: 60000,
-                })
-                window.location.href = '/user-management?status="success"'
+                window.location.href = '/user-management?statusMessage=success-add'
               }
             }
           })
