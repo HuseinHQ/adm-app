@@ -16,7 +16,7 @@
           <button
             class="bg-yellow-500 hover:bg-yellow-700 text-white text-sm font-semibold py-2 px-4 rounded-md"
             @click="addGoto"
-            v-if="statusweb === 'Web'"
+            v-if="statusweb === 'Web' || statusweb === 'Regional'"
           >
             Add User
           </button>
@@ -223,7 +223,7 @@ export default {
   data() {
     return {
       items: [],
-      statusweb: '',
+      statusweb: {},
       searchKey: '',
       pagesFirst: 0,
       pages: [],
