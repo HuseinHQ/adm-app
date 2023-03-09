@@ -1,7 +1,9 @@
 <template>
   <ul class="container">
     <nuxt-link to="/download">Download ADN</nuxt-link>
-    <nuxt-link to="/request-page">Request ADN</nuxt-link>
+    <nuxt-link v-if="statusweb === 'Web'" to="/request-page"
+      >Request ADN</nuxt-link
+    >
     <nuxt-link to="/user-management">User Management</nuxt-link>
     <button @click="clearCookie" class="text-sm">
       <svg
@@ -35,10 +37,34 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Swal from 'sweetalert2'
-
 export default {
   name: 'NavbarList',
+  data() {
+    return {
+      statusweb: {},
+    }
+  },
+  async created() {
+    let getCookie = document.cookie
+    let cookie = getCookie.split('Session=')
+    await axios
+      .post('http://localhost:5000/api/v1/get-user', {
+        cookies: cookie[1],
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .then((res) => {
+        if (res === undefined) {
+          alert('Data Not Found')
+        } else {
+          this.items = res.data.data.map((v) => ({ ...v, '': '' }))
+          this.statusweb = res.data.statusadmin
+        }
+      })
+  },
   methods: {
     clearCookie() {
       Swal.fire({
@@ -65,12 +91,12 @@ export default {
 <style scoped>
 .container {
   width: 60%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
   column-gap: 50px;
   color: white;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
+  padding-right: 6rem;
   font-size: 16px;
 }
 a {

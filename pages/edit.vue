@@ -220,7 +220,7 @@ export default {
           } else {
             if (res.status === 200) {
               window.alert(res.data.message)
-              window.location.href = '/user-management'
+              window.location.href = '/user-management?statusMessage=success-edit'
             }
           }
         })
