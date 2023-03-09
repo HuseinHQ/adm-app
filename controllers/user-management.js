@@ -32,7 +32,9 @@ exports.getall = (req, res) => {
                     return res.status(500).json({errorMessage: error})
                 }
 
-                return res.status(200).json({data: result})
+                return res.status(200).json({
+                  data: result,
+                  statusadmin: status})
             })
         } else {
             db.query('SELECT * FROM users WHERE status = "User"', (error, result) => {
@@ -116,9 +118,17 @@ exports.deleteuser = (req, res) => {
           errorMessage: error
         })
       }
+      console.log(result.affectedRows)
+      if (result.affectedRows == 0) {
+        return res.status(404).json({
+          message: "User Not Found"
+        })
+      } else {
+        return res.status(200).json({
+          message: "Success Delete User"
+        })
+      }
   
-      return res.status(200).json({
-        message: "Success Delete User"
-      })
+      
     })
 }
