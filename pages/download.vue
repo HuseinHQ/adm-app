@@ -329,15 +329,15 @@ export default {
             console.log(err)
           })
           .then((res) => {
-            if (res === undefined || res === '') {
+            if (res === undefined || res.data.data.length === 0) {
               Swal.fire({
                 icon: 'error',
                 title: 'Data Not Found',
                 text: 'Something went wrong!',
               })
-            } else {
+            } else if (res.data.data.length != 0) {
               this.items = res.data.data
-            }
+            } 
           })
       }
     },
