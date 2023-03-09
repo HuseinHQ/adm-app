@@ -65,9 +65,15 @@
                 <option value="" selected hidden disabled class="unselect">
                   Select Admin Status
                 </option>
-                <option value="Web">Admin Web</option>
-                <option value="Regional">Admin Regional</option>
-                <option value="User">Admin User</option>
+                <option v-if="statusweb === 'Web'" value="Web">
+                  Admin Web
+                </option>
+                <option v-if="statusweb === 'Web'" value="Regional">
+                  Admin Regional
+                </option>
+                <option v-if="statusweb !== 'User'" value="User">
+                  Admin User
+                </option>
               </select>
             </div>
           </div>
@@ -143,9 +149,28 @@ export default {
       passwordConfirm: '',
       status: '',
       regional: '',
+      statusweb: {},
     }
   },
-  created() {},
+  async created() {
+    let getCookie = document.cookie
+    let cookie = getCookie.split('Session=')
+    await axios
+      .post('http://localhost:5000/api/v1/get-user', {
+        cookies: cookie[1],
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .then((res) => {
+        if (res === undefined) {
+          alert('Data Not Found')
+        } else {
+          this.items = res.data.data.map((v) => ({ ...v, '': '' }))
+          this.statusweb = res.data.statusadmin
+        }
+      })
+  },
   methods: {
     cancel() {
       window.location.href = '/user-management'
