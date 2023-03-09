@@ -307,7 +307,7 @@ export default {
   async created() {},
   methods: {
     async generateTable() {
-      if (this.selectedData == '') {
+      if (this.selectedData == '' || this.startDate == '') {
         Swal.fire({
           icon: 'error',
           title: "Can't Generate Table",
@@ -361,7 +361,7 @@ export default {
         })
     },
     downloadTable() {
-      let data = this.filteredItems
+      let data = this.items
       let name = 'Data_ADN_Export'
       json2excel({
         data,

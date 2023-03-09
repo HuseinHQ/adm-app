@@ -216,7 +216,8 @@
 <script>
 import Navbar from '~/components/Navbar.vue'
 import axios from 'axios'
-import { json2excel, excel2json } from 'js2excel'
+import { json2excel } from 'js2excel'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'UserManagement',
@@ -237,21 +238,22 @@ export default {
   async created() {
     let getCookie = document.cookie
     let cookie = getCookie.split('Session=')
-    await axios.post('http://localhost:5000/api/v1/get-user', {
-      cookies: cookie[1],
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-    .then((res) => {
-      if (res === undefined) {
-        alert('Data Not Found')
-      } else {
-        this.items = res.data.data.map((v) => ({ ...v, '': '' }))
-        this.statusweb = res.data.statusadmin
-      }
-    })
-  
+    await axios
+      .post('http://localhost:5000/api/v1/get-user', {
+        cookies: cookie[1],
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .then((res) => {
+        if (res === undefined) {
+          alert('Data Not Found')
+        } else {
+          this.items = res.data.data.map((v) => ({ ...v, '': '' }))
+          this.statusweb = res.data.statusadmin
+        }
+      })
+
     let ulrParams = new URLSearchParams(window.location.search)
     let Message = ulrParams.get('statusMessage')
 
@@ -260,14 +262,14 @@ export default {
         position: 'center',
         icon: 'success',
         title: 'User has been saved',
-        showConfirmButton: true
+        showConfirmButton: true,
       })
     } else if (Message == 'success-edit') {
       Swal.fire({
         position: 'center',
         icon: 'success',
         title: 'Edit User Success',
-        showConfirmButton: true
+        showConfirmButton: true,
       })
     } else if (Message == 'success-delete') {
       Swal.fire('Deleted!', 'User has been deleted.', 'success')
