@@ -232,24 +232,49 @@ export default {
       perPages: 4,
     }
   },
+  props: {
+    statusMessage: Number,
+  },
   async created() {
     let getCookie = document.cookie
     let cookie = getCookie.split('Session=')
-    await axios
-      .post('http://localhost:5000/api/v1/get-user', {
-        cookies: cookie[1],
+    await axios.post('http://localhost:5000/api/v1/get-user', {
+      cookies: cookie[1],
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    .then((res) => {
+      if (res === undefined) {
+        alert('Data Not Found')
+      } else {
+        this.items = res.data.data.map((v) => ({ ...v, '': '' }))
+        this.statusweb = res.data.statusadmin
+      }
+    })
+  
+    let ulrParams = new URLSearchParams(window.location.search)
+    let Message = ulrParams.get('statusMessage')
+
+    if (Message == 'success-add') {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'User has been saved',
+        showConfirmButton: true
       })
-      .catch((err) => {
-        console.log(err)
+    } else if (Message == 'success-edit') {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Edit User Success',
+        showConfirmButton: true
       })
-      .then((res) => {
-        if (res === undefined) {
-          alert('Data Not Found')
-        } else {
-          this.items = res.data.data.map((v) => ({ ...v, '': '' }))
-          this.statusweb = res.data.statusadmin
-        }
-      })
+    } else if (Message == 'success-delete') {
+      Swal.fire('Deleted!', 'User has been deleted.', 'success')
+    } else if (Message == 'failed-delete') {
+      Swal.fire('Failed Deleted!', 'User Failed deleted.', 'error')
+    }
   },
   components: { Navbar },
   methods: {
