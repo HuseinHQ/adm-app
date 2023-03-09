@@ -217,7 +217,6 @@
 import Navbar from '~/components/Navbar.vue'
 import axios from 'axios'
 import { json2excel, excel2json } from 'js2excel'
-import Swal from 'sweetalert2'
 
 export default {
   name: 'UserManagement',
